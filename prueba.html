@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video de fondo</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .button-container {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-right: 10px;
+        background-color: pink;
+        color: white;
+    }
+    .button.yes {
+        background-color: green;
+    }
+    .button.no {
+        background-color: red;
+    }
+    .question {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 20px;
+        color: white;
+    }
+    .response {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 20px;
+        color: purple;
+    }
+</style>
+</head>
+<body>
+<video autoplay muted loop id="myVideo">
+  <source src="Hello.mp4" type="video/mp4">
+  Your browser does not support HTML5 video.
+</video>
+<div class="button-container">
+    <button id="continueButton" class="button">Continuar</button>
+</div>
+
+<script>
+    document.getElementById('continueButton').addEventListener('click', function() {
+        var video = document.getElementById('myVideo');
+        video.src = '2.mp4';
+        video.play();
+        this.style.display = 'none';
+        
+        var openButton = document.createElement('button');
+        openButton.textContent = 'Abrir';
+        openButton.classList.add('button');
+        openButton.style.display = 'inline-block';
+        openButton.addEventListener('click', function() {
+            video.src = '3.mp4';
+            video.play();
+            openButton.style.display = 'none';
+            
+            var nextButton = document.createElement('button');
+            nextButton.textContent = 'Siguiente';
+            nextButton.classList.add('button');
+            nextButton.style.display = 'inline-block';
+            nextButton.addEventListener('click', function() {
+                video.src = '4.mp4';
+                video.play();
+                nextButton.style.display = 'none';
+                
+                var continueButton = document.createElement('button');
+                continueButton.textContent = 'Seguir';
+                continueButton.classList.add('button');
+                continueButton.style.display = 'inline-block';
+                continueButton.addEventListener('click', function() {
+                    video.src = '5.mp4';
+                    video.play();
+                    continueButton.style.display = 'none';
+                    
+                    var question = document.createElement('div');
+                    question.textContent = 'Me he dado cuenta de lo especial que eres y me preguntaba, ¿me darías la oportunidad de invitarte a salir para conocernos mejor?';
+                    question.classList.add('question');
+
+                    var yesButton = document.createElement('button');
+                    yesButton.textContent = 'Sí';
+                    yesButton.classList.add('button', 'yes');
+                    yesButton.style.display = 'block';
+                    yesButton.addEventListener('click', function() {
+                        video.src = '10.mp4';
+                        video.play();
+                        yesButton.style.display = 'none';
+                        noButton.style.display = 'none';
+                        question.style.display = 'none';
+                        
+                        var response = document.createElement('div');
+                        response.textContent = '¡Qué alegría que hayas aceptado! Con gusto planearé algo especial para ambos.';
+                        response.classList.add('response');
+
+                        var body = document.querySelector('body');
+                        body.appendChild(response);
+                    });
+
+                    var noButton = document.createElement('button');
+                    noButton.textContent = 'No';
+                    noButton.classList.add('button', 'no');
+                    noButton.style.display = 'block';
+                    noButton.addEventListener('click', function() {
+                        video.src = '11.mp4';
+                        video.play();
+                        yesButton.style.display = 'none';
+                        noButton.style.display = 'none';
+                        question.style.display = 'none';
+                        
+                        var response = document.createElement('div');
+                        response.textContent = 'Está bien, te agradezco tu honestidad. Si en algún momento te apetece platicar o necesitas algo, aquí estaré.';
+                        response.classList.add('response');
+
+                        var body = document.querySelector('body');
+                        body.appendChild(response);
+                    });
+
+                    var buttonContainer = document.querySelector('.button-container');
+                    buttonContainer.appendChild(yesButton);
+                    buttonContainer.appendChild(noButton);
+
+                    var body = document.querySelector('body');
+                    body.appendChild(question);
+                });
+
+                var buttonContainer = document.querySelector('.button-container');
+                buttonContainer.appendChild(continueButton);
+            });
+
+            var buttonContainer = document.querySelector('.button-container');
+            buttonContainer.appendChild(nextButton);
+        });
+
+        var buttonContainer = document.querySelector('.button-container');
+        buttonContainer.appendChild(openButton);
+    });
+</script>
+</body>
+</html>
